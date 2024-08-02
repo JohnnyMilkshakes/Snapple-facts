@@ -30,10 +30,7 @@ authRouter.post('/sign-up', async (req,res) => {
 })
 
 authRouter.get('/sign-in', async (req,res) => {
-    // check if user exists
-
     res.render('auth/sign-in.ejs')
-
 })
 
 
@@ -52,8 +49,6 @@ authRouter.post('/sign-in', async (req,res) => {
         if(!validPassword) {
             res.send("Wrong password")
         }
-
-        console.log(req.session)
         
         req.session.user = {
             username: user.username

@@ -24,15 +24,30 @@ h1 {
 
 body {
     display: grid;
+    background-color: rgb(244, 210, 118);
 }
 
 .fact-container {
     display: grid;
     justify-content: space-around;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    background-color: blue;
+    background-color: rgb(166, 164, 164);
+}
+
+.fact-title {
+    text-align: center;
+}
+
+.fact-text {
+    margin-top: 100px;
+    text-align: center;
+
+}
+
+.fact-buttons{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 100px;
 }
 
   

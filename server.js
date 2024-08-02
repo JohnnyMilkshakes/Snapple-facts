@@ -1,18 +1,17 @@
 import dotenv from "dotenv"
 dotenv.config()
 import express from "express"
-const app = express()
-
-import authController from "./controllers/auth.js"
-
 import mongoose from "mongoose"
 import methodOverride from "method-override"
 import morgan from "morgan"
-
 import session from "express-session"
 import path from "path"
-
 import { fileURLToPath } from "url"
+
+import authController from "./controllers/auth.js"
+import factsController from "./controllers/facts.js"
+
+const app = express()
 
 // Simulate __dirname in ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -35,7 +34,6 @@ mongoose.connection.on("connected", () => {
     app.use(morgan('dev'))
 
     app.use(express.static(path.join(__dirname, "public")));
-
 
     app.use(
         session({
@@ -60,6 +58,7 @@ mongoose.connection.on("connected", () => {
       });      
 
     app.use('/auth', authController)
+    app.use('/facts', factsController)
 
     app.listen(port, () => {
         console.log(`The express app is ready on port ${port}!`)

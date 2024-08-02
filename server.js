@@ -10,6 +10,13 @@ import methodOverride from "method-override"
 import morgan from "morgan"
 
 import session from "express-session"
+import path from "path"
+
+import { fileURLToPath } from "url"
+
+// Simulate __dirname in ES6 modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT || "3000"
@@ -26,6 +33,9 @@ mongoose.connection.on("connected", () => {
     app.use(methodOverride("_method"))
     // Morgan for logging HTTP requests
     app.use(morgan('dev'))
+
+    app.use(express.static(path.join(__dirname, "public")));
+
 
     app.use(
         session({

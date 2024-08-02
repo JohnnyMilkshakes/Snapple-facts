@@ -5,21 +5,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
     <title>Home Page</title>
   </head>
   <body>
-    <% if (user) { %>
-        <h1>Welcome to the app, <%= user.username %>!</h1>
-        <p>
-            <a href="/auth/sign-out">Sign out</a>
-        </p>
-    <% } else { %>
-        <h1>Welcome to the app, guest.</h1>
-        <p>
-          <a href="/auth/sign-up">Sign up</a> or <a href="/auth/sign-in">sign in</a>.
-        </p>
-    <% } %>
-    <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p>
+        <%- include('partials/header')%>
+
+        <div class="fact-container">
+            <h2 class="fact-title">Snapple Fact # 11</h2>
+            <p class="fact-text">Flamingos turn pink from eating shrimp.</p>
+        </div>
+        <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->
 
   </body>
 </html>

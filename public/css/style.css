@@ -39,9 +39,6 @@ html, body {
     justify-content: space-evenly;
 }
 
-h1 { 
-}
-
 header {
     background-color: aqua;
 }
@@ -56,9 +53,6 @@ header {
     background-color: rgb(166, 164, 164);
 }
 
-.fact-title {
-}
-
 .fact-text {
     margin: 50px 25px;
 }
@@ -66,10 +60,4 @@ header {
 .fact-buttons {
     margin-bottom: 25px;
 }
-
-  
-
-  
-
-  
   

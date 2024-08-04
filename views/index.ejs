@@ -9,17 +9,47 @@
     <title>Home Page</title>
   </head>
   <body>
-        <%- include('partials/header')%>
+        <!-- <%- include('partials/header')%> -->
 
-        <div class="fact-container">
-            <h2 class="fact-title">Snapple Fact # 11</h2>
-            <p class="fact-text">Flamingos turn pink from eating shrimp.</p>
-            <div class="fact-buttons">
-                <button><--</button>
-                <button>Randomize</button>
-                <button>--></button>
+
+        <div class="page-container">
+            <div class="sidebar">
+                <div class="sign-buttons">
+                    <% if (user) { %>
+                        <button><a href="/auth/sign-out">Sign out</a></button>
+                        <button><a href="/auth/sign-in">Your Account</a></button>
+                    <% } else { %>
+                        <button><a href="/auth/sign-up">Sign up</a></button> 
+                        <button><a href="/auth/sign-in">sign in</a></button>
+                    <% } %>
+                </div>
+                <div class="nav-buttons">
+                    <a href="/">Home</a>
+                    <a href="/facts">List</a>
+                    <a href="#">About</a>
+                </div>
+                
+                
             </div>
-        </div>
+            <div class="main-area">
+                <% if (user) { %>
+                    <h1>Welcome to the home of everything Snapple Facts, <%= user.username %>!</h1>
+                <% } else { %>
+                    <h1>Welcome to the home of everything Snapple Facts!</h1>
+                <% } %>
+                <div class="fact-container">
+                    <h2 class="fact-title">Snapple Fact # <%= snappleFact.number %></h2>
+                    <p class="fact-text"><%= snappleFact.fact %></p>
+                    <div class="fact-buttons">
+                        <button><--</button>
+                        <button><a href="/">Randomize</a></button>
+                        <button>--></button>
+                    </div>
+                </div>
+            </div>
+
+         </div>
+
         <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->
 
   </body>

@@ -4,6 +4,8 @@ const snappleFactSchema = new mongoose.Schema({
     fact: String,
     number: Number,
     isRetired: Boolean,
+    // comments: [commentSchema],
+    // stars: [ObjectID],
     source: Array
 })
 

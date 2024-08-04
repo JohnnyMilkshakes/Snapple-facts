@@ -13,4 +13,12 @@ factsRouter.get('/', async (req, res) => {
     })
 })
 
+factsRouter.get('/:factNumber', async (req, res) => {
+    let factNumber = req.params.factNumber
+    res.render('facts/show.ejs', {
+        user: req.session.user,
+        factNumber: factNumber
+    })
+})
+
 export default factsRouter;

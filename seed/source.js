@@ -64,4 +64,34 @@ const addSnappleFact = async (fact) => {
     return response
 }
 
+const updateSnappleFact = async (entryToUpdate, fieldsToChange) => {
+    const response = await SnappleFact.updateOne(entryToUpdate, fieldsToChange)
+    return response
+}
+
+const getAllSnappleFacts = async () => {
+    const response = await SnappleFact.find({})
+    return response
+}
+
+const getSnappleFactById = async (id) => {
+    const response = await Todo.findById(id)
+    return response
+}
+
+const updateTodoComplete = async (id) => {
+    const response = await Todo.findByIdAndUpdate(
+        id,
+        {isComplete: true},
+        {new:true}
+    )
+
+    return response
+}
+
+const deleteOneSnappleFact = async (id) => {
+    const fact = await getSnappleFactById(id)
+    await fact.deleteOne()
+}
+
 connect()

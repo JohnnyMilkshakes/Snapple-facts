@@ -10,8 +10,10 @@ import { fileURLToPath } from "url"
 
 import authController from "./controllers/auth.js"
 import factsController from "./controllers/facts.js"
+import SnappleFact from "./models/snapple-fact.js"
 
-const app = express()
+
+const server = express()
 
 // Simulate __dirname in ES6 modules
 const __filename = fileURLToPath(import.meta.url);
@@ -27,15 +29,15 @@ mongoose.connection.on("connected", () => {
     console.log(`Connected to MongoDB ${mongoose.connection.name}.`)
 
     // Middleware to parse URL-encoded data from forms
-    app.use(express.urlencoded({ extended: false }))
+    server.use(express.urlencoded({ extended: false }))
     // Middleware for using HTTP verbs such as PUT or DELETE
-    app.use(methodOverride("_method"))
+    server.use(methodOverride("_method"))
     // Morgan for logging HTTP requests
-    app.use(morgan('dev'))
+    server.use(morgan('dev'))
 
-    app.use(express.static(path.join(__dirname, "public")));
+    server.use(express.static(path.join(__dirname, "public")));
 
-    app.use(
+    server.use(
         session({
             secret: process.env.SESSION_SECRET,
             resave: false,
@@ -43,13 +45,21 @@ mongoose.connection.on("connected", () => {
         })
     )
 
-    app.get("/", async (req, res) => {
+    server.get("/", async (req, res) => {
+
+        const response = await SnappleFact.find({isRetired:false})
+
+        const rand = Math.floor(Math.random() * 343)
+        console.log("Snapple fact response: " + response[rand])
+
+
         res.render("index.ejs", {
-            user: req.session.user
+            user: req.session.user,
+            snappleFact: response[rand]
         })
     })
 
-    app.get("/vip-lounge", (req, res) => {
+    server.get("/vip-lounge", (req, res) => {
         if (req.session.user) {
           res.send(`Welcome to the party ${req.session.user.username}.`);
         } else {
@@ -57,10 +67,10 @@ mongoose.connection.on("connected", () => {
         }
       });      
 
-    app.use('/auth', authController)
-    app.use('/facts', factsController)
+    server.use('/auth', authController)
+    server.use('/facts', factsController)
 
-    app.listen(port, () => {
-        console.log(`The express app is ready on port ${port}!`)
+    server.listen(port, () => {
+        console.log(`The express server is ready on port ${port}!`)
     })
 })

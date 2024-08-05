@@ -1,15 +1,19 @@
 import express from "express"
 // import User from "../models/user.js"
-// import SnappleFact from "../models/snapple-fact.js"
+import SnappleFact from "../models/snapple-fact.js"
 
 const factsRouter = express.Router()
 
 // facts index page
 
-console.log("GOTHERE")
 factsRouter.get('/', async (req, res) => {
+
+    const facts = await SnappleFact.find({}).limit(20);
+
+
     res.render('facts/index.ejs', {
-        user: req.session.user
+        user: req.session.user,
+        facts: facts
     })
 })
 

@@ -9,8 +9,38 @@
     <title>Home Page</title>
   </head>
   <body>
-        <%- include('../partials/header')%>
-        raegstdhyjrutyhsrgrefsvtwbgrtdhg
+
+        <div class="page-container">
+          <div class="sidebar">
+              <div class="sign-buttons">
+                  <% if (user) { %>
+                      <button><a href="/auth/sign-out">Sign out</a></button>
+                      <button><a href="#">Your Account</a></button>
+                  <% } else { %>
+                      <button><a href="/auth/sign-up">Sign up</a></button> 
+                      <button><a href="/auth/sign-in">sign in</a></button>
+                  <% } %>
+              </div>
+              <div class="nav-buttons">
+                  <a href="/">Home</a>
+                  <a href="/facts">List</a>
+                  <a href="#">About</a>
+              </div>
+              
+          </div>
+          
+
+          <div class="fact-index-main-area">
+            <ul>
+              <% facts.forEach(fact => { %>
+                <%if(!fact.isRetired) {fact.color = "green"} else if (fact.isRetired && (fact.fact === null)) {fact.color = "reddish"} %>
+                <li class="<%= fact.color%>"><%= fact.number %>: <%= fact.fact %></li>
+              <% }); %>
+            </ul>
+    
+          </div>
+
+       </div>
         <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->
 
   </body>

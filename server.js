@@ -11,6 +11,8 @@ import { fileURLToPath } from "url"
 import authController from "./controllers/auth.js"
 import factsController from "./controllers/facts.js"
 import SnappleFact from "./models/snapple-fact.js"
+import usersController from "./controllers/users.js"
+
 
 
 const server = express()
@@ -68,6 +70,7 @@ mongoose.connection.on("connected", () => {
       });      
 
     server.use('/auth', authController)
+    server.use('/users', usersController)
     server.use('/facts', factsController)
 
     server.listen(port, () => {

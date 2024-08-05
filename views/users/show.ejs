@@ -9,8 +9,26 @@
     <title>Home Page</title>
   </head>
   <body>
-        <%- include('../partials/header')%>
-        SHOW ME: <%= user.username %> 
+
+        <div class="page-container">
+            <div class="sidebar">
+                <%- include('../partials/sidebar')%>
+            </div>
+            <div class="main-area">
+                <h1>Welcome to your account, <%= user.username %>!</h1>
+
+                <div class="user-comments-container">
+                    <h2>Comments:</h2>
+                </div>
+
+                <div class="user-stars-container">
+                    <h2>Stars:</h2>
+
+                </div>
+            </div>
+
+         </div>
+
         <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->
 
   </body>

@@ -4,17 +4,35 @@ import SnappleFact from "../models/snapple-fact.js"
 
 const usersRouter = express.Router()
 
-
 usersRouter.get('/', async (req, res) => {
+    try {
+        if (req.session.user) {
+            const username = req.session.user.username;
+            console.log(`Username: ${username}`);
 
-    res.render('users/show.ejs', {
-        user: req.session.user,
-    })
+            const user = await User.findOne({ username: username });
+            if (user) {
+                console.log(`User ID: ${user._id}`);
+                res.redirect(`/users/${user._id}`);
+            } else {
+                res.send('User not found');
+            }
+        } else {
+            res.send('Please Log in');
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
+
+
 })
 
-usersRouter.get('/:factNumber', async (req, res) => {
+usersRouter.get('/:userID', async (req, res) => {
 
-    res.render('facts/show.ejs', {
+    // const user = await User.findOne({ username: username });
+
+    res.render('users/show.ejs', {
         user: req.session.user
     })
 })

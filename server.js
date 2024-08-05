@@ -49,16 +49,17 @@ mongoose.connection.on("connected", () => {
 
     server.get("/", async (req, res) => {
 
-        const response = await SnappleFact.find({isRetired:false})
-
-        const rand = Math.floor(Math.random() * 343)
-        console.log("Snapple fact response: " + response[rand])
-
-
-        res.render("index.ejs", {
-            user: req.session.user,
-            snappleFact: response[rand]
-        })
+        if (req.query.query) {
+            res.redirect(`/facts/${req.query.query}`)
+        } else {
+            const response = await SnappleFact.find({isRetired:false})
+            const rand = Math.floor(Math.random() * 343)    
+    
+            res.render("index.ejs", {
+                user: req.session.user,
+                snappleFact: response[rand]
+            })
+        }
     })
 
     server.get("/vip-lounge", (req, res) => {

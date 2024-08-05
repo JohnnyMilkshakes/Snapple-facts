@@ -12,21 +12,7 @@
 
         <div class="page-container">
           <div class="sidebar">
-              <div class="sign-buttons">
-                  <% if (user) { %>
-                      <button><a href="/auth/sign-out">Sign out</a></button>
-                      <button><a href="#">Your Account</a></button>
-                  <% } else { %>
-                      <button><a href="/auth/sign-up">Sign up</a></button> 
-                      <button><a href="/auth/sign-in">sign in</a></button>
-                  <% } %>
-              </div>
-              <div class="nav-buttons">
-                  <a href="/">Home</a>
-                  <a href="/facts">List</a>
-                  <a href="#">About</a>
-              </div>
-              
+            <%- include('../partials/sidebar')%>
           </div>
           
 

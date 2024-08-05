@@ -9,26 +9,10 @@
     <title>Home Page</title>
   </head>
   <body>
-        <!-- <%- include('partials/header')%> -->
-
 
         <div class="page-container">
             <div class="sidebar">
-                <div class="sign-buttons">
-                    <% if (user) { %>
-                        <button><a href="/auth/sign-out">Sign out</a></button>
-                        <button><a href="#">Your Account</a></button>
-                    <% } else { %>
-                        <button><a href="/auth/sign-up">Sign up</a></button> 
-                        <button><a href="/auth/sign-in">sign in</a></button>
-                    <% } %>
-                </div>
-                <div class="nav-buttons">
-                    <a href="/">Home</a>
-                    <a href="/facts">List</a>
-                    <a href="#">About</a>
-                </div>
-                
+                <%- include('partials/sidebar')%>
             </div>
             <div class="main-area">
                 <% if (user) { %>
@@ -36,6 +20,10 @@
                 <% } else { %>
                     <h1>Welcome to the home of everything Snapple Facts!</h1>
                 <% } %>
+                <form action="/" method="get">
+                    <input type="text" name="query" id="searchInput" placeholder="Find a specific number">
+                    <button type="submit">Find</button>
+                </form>
                 <div class="fact-container">
                     <h2 class="fact-title">Snapple Fact # <%= snappleFact.number %></h2>
                     <p class="fact-text"><%= snappleFact.fact %></p>

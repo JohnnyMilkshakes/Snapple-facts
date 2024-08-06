@@ -5,7 +5,8 @@ html, body {
     background-color: rgb(77, 77, 77);
 }
 
-.page-container {  display: grid;
+.page-container {  
+    display: grid;
     grid-template-columns: 0.3fr 1.7fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
@@ -16,19 +17,29 @@ html, body {
 }
   
 .main-area { 
-    grid-area: main-area; 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center
+    display: grid; 
+    grid-auto-columns: 1fr; 
+    grid-template-columns: 0.3fr 2.4fr 0.3fr; 
+    grid-template-rows: 0.5fr 0.3fr 2.2fr 1fr; 
+    gap: 0px 0px; 
+    grid-template-areas: 
+      ". heading ."
+      ". search-container ."
+      ". fact-container ."
+      ". comment-container ."; 
 }
+
+.heading { grid-area: heading; }
+.search-container { grid-area: search-container; }
+.fact-container { grid-area: fact-container; }
+.comment-container { grid-area: comment-container; }
 
 .fact-index-main-area {
     display: flex;
     row-gap: 20px;
 }
 .fact-index-main-area > ul {
-padding: 0;
+    padding: 0;
 }
 .fact-index-main-area > ul > a {
     color: inherit; /* Inherit text color from parent */
@@ -41,13 +52,6 @@ padding: 0;
     margin: 5px 0px;
 
 }
-
-
-
-/* .fact-index-main-area > ul >li {
-    padding: 20px;
-    margin: 5px 0px;
-} */
 
 .green {
     border: 2px solid rgb(38, 255, 0);;
@@ -83,14 +87,16 @@ padding: 0;
 }
 
 .nav-buttons > a {
-    background-color: aqua;
+    background-color: rgb(81, 0, 108);
+    padding: 10px;
     width: 85%;
     text-align: center;
-    border-radius: 10%;
+    border-radius: 0;
+    border: 3px solid rgb(187, 1, 250);
     text-decoration: none;
     text-transform: uppercase;
+    color: rgb(252, 252, 252);
     font-size: 1.5em;
-    
 }
   
 
@@ -106,13 +112,7 @@ header {
 
 .left { grid-area: left; }
 
-.fact-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 25%;
-    background-color: rgb(166, 164, 164);
-}
+
 
 .fact-text {
     margin: 50px 25px;
@@ -121,4 +121,30 @@ header {
 .fact-buttons {
     margin-bottom: 25px;
 }
+
+.single-fact-area {  
+    display: grid;
+    grid-template-columns: 0.3fr 2.4fr 0.3fr;
+    grid-template-rows: 1.5fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      ". fact-container ."
+      ". comment-submit ."
+      ". comments-container .";
+  }
+
+  .fact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 50%;
+    background-color: rgb(166, 164, 164);
+}
+  
+.comment-submit-container { grid-area: comment-submit; }
+  
+.comments-container { grid-area: comments-container; }
+  
   

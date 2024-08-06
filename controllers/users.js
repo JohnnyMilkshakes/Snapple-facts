@@ -37,4 +37,41 @@ usersRouter.get('/:userID', async (req, res) => {
     })
 })
 
+usersRouter.get('/:userID/comments', async (req, res) => {
+
+    try {
+        if (req.session.user) {
+            const username = req.session.user.username;
+            console.log(`Username: ${username}`);
+
+            const user = await User.findOne({ username: username });
+            if (user) {
+                console.log(`User ID: ${user._id}`);
+                console.log(`User ID: ${user}`);
+
+                res.render('users/comments.ejs', {
+                user: req.session.user,
+                comments: user.comments
+                })
+            } else {
+                res.send('User not found');
+            }
+        } else {
+            res.send('Please Log in');
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
+})
+
+usersRouter.get('/:userID/stars', async (req, res) => {
+
+    // const user = await User.findOne({ username: username });
+
+    res.render('users/stars.ejs', {
+        user: req.session.user
+    })
+})
+
 export default usersRouter;

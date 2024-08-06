@@ -9,7 +9,6 @@ authRouter.get('/sign-up', async (req,res) => {
 })
 
 authRouter.post('/sign-up', async (req,res) => {
-    // check if user exists
 
     const user = await User.findOne({username: req.body.username})
 

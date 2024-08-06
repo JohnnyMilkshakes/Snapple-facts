@@ -4,11 +4,11 @@ import SnappleFact from "../models/snapple-fact.js"
 
 const usersRouter = express.Router()
 
+// redirect to user page
 usersRouter.get('/', async (req, res) => {
     try {
         if (req.session.user) {
             const username = req.session.user.username;
-            console.log(`Username: ${username}`);
 
             const user = await User.findOne({ username: username });
             if (user) {
@@ -24,21 +24,19 @@ usersRouter.get('/', async (req, res) => {
         console.log(err);
         res.status(500).send('Server error');
     }
-
-
 })
 
+// Show user page
 usersRouter.get('/:userID', async (req, res) => {
 
     const user = await User.findOne({ username: req.session.user.username });
-
-
 
     res.render('users/show.ejs', {
         user: user
     })
 })
 
+// Show all user comments
 usersRouter.get('/:userID/comments', async (req, res) => {
 
     try {
@@ -51,8 +49,9 @@ usersRouter.get('/:userID/comments', async (req, res) => {
             // find user
             const user = await User.findOne({ username: username })
 
-            // get comments from snapple facts that have the user ID embedded in its comments 
-            // this returns the entire fact document with all comments
+            // the users comments are embedded within the snapple facts so we 
+            // find all snapple facts that have the user ID embedded somewhere in its comments 
+            // this returns all of the facts as an array and all of the comments associated with each fact
             const snappleFacts = await SnappleFact.find({
                 'comments.userId': user._id
             })
@@ -82,6 +81,7 @@ usersRouter.get('/:userID/comments', async (req, res) => {
     }
 })
 
+// Show all user stars
 usersRouter.get('/:userID/stars', async (req, res) => {
 
     // const user = await User.findOne({ username: username });

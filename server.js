@@ -66,14 +66,7 @@ mongoose.connection.on("connected", () => {
             user: req.session.user,
         })
 
-    })
-    server.get("/vip-lounge", (req, res) => {
-        if (req.session.user) {
-          res.send(`Welcome to the party ${req.session.user.username}.`);
-        } else {
-          res.redirect('/auth/sign-in');
-        }
-      });      
+    })    
 
     server.use('/auth', authController)
     server.use('/users', usersController)

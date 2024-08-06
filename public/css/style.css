@@ -13,7 +13,7 @@ html, body {
     grid-template-areas:
       "sidebar main-area";
       height: 100%;
-  }
+}
   
 .main-area { 
     grid-area: main-area; 
@@ -27,25 +27,47 @@ html, body {
     display: flex;
     row-gap: 20px;
 }
-
-.fact-index-main-area > ul >li {
+.fact-index-main-area > ul {
+padding: 0;
+}
+.fact-index-main-area > ul > a {
+    color: inherit; /* Inherit text color from parent */
+    text-decoration: none; /* Remove underline */
+    background-color: transparent; 
+    color:rgb(255, 255, 254);
+    font-size: 1.5em;
+    list-style-type: none;
     padding: 20px;
     margin: 5px 0px;
-    color:beige
+
 }
+
+
+
+/* .fact-index-main-area > ul >li {
+    padding: 20px;
+    margin: 5px 0px;
+} */
 
 .green {
-    border: 2px solid green;
+    border: 2px solid rgb(38, 255, 0);;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    background-color: rgb(41, 40, 40);
+    background-color: rgb(12, 77, 1);
 }
 
-.reddish {
+.red {
     border: 2px solid rgb(245, 56, 56);
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     padding: 20px;
-    background-color: rgb(41, 40, 40);
+    background-color: rgb(70, 12, 12);
+}
+
+.reddish {
+    border: 2px solid rgb(252, 124, 73);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    background-color: rgb(73, 32, 16);
 }
   
 .sidebar {

@@ -14,13 +14,12 @@
           <div class="sidebar">
             <%- include('../partials/sidebar')%>
           </div>
-          
 
           <div class="fact-index-main-area">
             <ul>
               <% facts.forEach(fact => { %>
-                <%if(!fact.isRetired) {fact.color = "green"} else if (fact.isRetired && (fact.fact === null)) {fact.color = "reddish"} %>
-                <li class="<%= fact.color%>"><%= fact.number %>: <%= fact.fact %></li>
+                <%if(!fact.isRetired) {fact.color = "green"} else if (fact.isRetired && (fact.fact === "MISSING")) {fact.color = "red"} else if (fact.isRetired && (fact.fact !== "MISSING")) {fact.color = "reddish"} %>
+                <a href="facts/<%= fact.number %>"><li class="<%= fact.color%>"><%= fact.number %>: <%= fact.fact %></li></a>
               <% }); %>
             </ul>
     

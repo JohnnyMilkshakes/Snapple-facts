@@ -7,7 +7,7 @@ const factsRouter = express.Router()
 // list of facts
 factsRouter.get('/', async (req, res) => {
 
-    const facts = await SnappleFact.find({}).limit(20);
+    const facts = await SnappleFact.find({})//.limit(20);
 
     res.render('facts/index.ejs', {
         user: req.session.user,
@@ -21,7 +21,7 @@ factsRouter.get('/:factNumber', async (req, res) => {
 
     const response = await SnappleFact.findOne({number:factNumber})
 
-    
+
 
     res.render('facts/show.ejs', {
         user: req.session.user,

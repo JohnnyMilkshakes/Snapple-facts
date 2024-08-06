@@ -14,12 +14,19 @@
             <div class="sidebar">
                 <%- include('../partials/sidebar')%>
             </div>
-                <div class="user-comments-container">
-                    <h2>Comments:</h2>
-                    <% comments.forEach(comment => { %>
-                    <a href=""><li>Comment on Fact #<%= fact.number %>: COMMENT GOES HERE</li></a>   
-                    <% })%>
-                </div>
+            <div class="comments-container">
+                <h2 class="fact-title">Comments:</h2>
+
+                <ol class="comments-list">
+                    <% userComments.forEach((comment) => {%>
+                        <li>
+                            Comment: <%= comment.comment %><br>
+                            Source: <%= comment.source %><br>
+                            Date: <%= comment.date%>
+                        </li>
+                    <% }) %>
+                </ol>
+            </div>
          </div>
 
         <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->

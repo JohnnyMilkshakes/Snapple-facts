@@ -30,32 +30,49 @@ usersRouter.get('/', async (req, res) => {
 
 usersRouter.get('/:userID', async (req, res) => {
 
-    // const user = await User.findOne({ username: username });
+    const user = await User.findOne({ username: req.session.user.username });
+
+
 
     res.render('users/show.ejs', {
-        user: req.session.user
+        user: user
     })
 })
 
 usersRouter.get('/:userID/comments', async (req, res) => {
 
     try {
+        // if the user is signed in
         if (req.session.user) {
+
+            //set username
             const username = req.session.user.username;
-            console.log(`Username: ${username}`);
 
-            const user = await User.findOne({ username: username });
-            if (user) {
-                console.log(`User ID: ${user._id}`);
-                console.log(`User ID: ${user}`);
+            // find user
+            const user = await User.findOne({ username: username })
 
-                res.render('users/comments.ejs', {
-                user: req.session.user,
-                comments: user.comments
-                })
-            } else {
-                res.send('User not found');
-            }
+            // get comments from snapple facts that have the user ID embedded in its comments 
+            // this returns the entire fact document with all comments
+            const snappleFacts = await SnappleFact.find({
+                'comments.userId': user._id
+            })
+
+            // extract only the comments that match the user ID
+            const userComments = [];
+            snappleFacts.forEach(fact => {
+                fact.comments.forEach(comment => {
+                    if (comment.userId.equals(user._id)) {
+                        userComments.push(comment);
+                    }
+                });
+            });
+
+            // render the ejs template with the comments
+            res.render('users/comments.ejs', {
+                user: user,
+                userComments: userComments
+            })
+ 
         } else {
             res.send('Please Log in');
         }

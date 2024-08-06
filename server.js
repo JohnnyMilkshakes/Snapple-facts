@@ -13,8 +13,6 @@ import factsController from "./controllers/facts.js"
 import SnappleFact from "./models/snapple-fact.js"
 import usersController from "./controllers/users.js"
 
-
-
 const server = express()
 
 // Simulate __dirname in ES6 modules

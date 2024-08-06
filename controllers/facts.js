@@ -22,6 +22,8 @@ factsRouter.get('/:factNumber', async (req, res) => {
 
     const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
 
+    console.log(snappleFact)
+
     res.render('facts/show.ejs', {
         user: req.session.user,
         snappleFact: snappleFact
@@ -71,34 +73,13 @@ factsRouter.post('/:factNumber/comments', async (req, res) => {
             await snappleFact.save();
             await userObj.save();
     
-            res.render('facts/show.ejs', {
-                user: req.session.user,
-                snappleFact: snappleFact
-            })
+            res.redirect(`/facts/${factNumber}`)
         }
 
     } catch (error) {
         console.error('Error adding comment:', error);
         res.status(500).json({ error: 'An error occurred while adding the comment' });
-    }
-
-
-    // let factNumber = req.params.factNumber
-    
-    // const comment = req.body.comment
-    // console.log(`HTTP BODY: ${JSON.stringify(httpBody)}`)
-
-    // const response = await SnappleFact.findOne({number:factNumber})
-
-    // console.log(response)
-
-    // res.render('facts/show.ejs', {
-    //     user: req.session.user,
-    //     snappleFact: response
-    // })
-
-
- 
+    } 
 })
 
 export default factsRouter;

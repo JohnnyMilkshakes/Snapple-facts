@@ -3,14 +3,8 @@ import mongoose from'mongoose'
 import dotenv from 'dotenv'
 dotenv.config({path: '../.env'})
 
-const snappleFactSchema = new mongoose.Schema({
-    fact: String,
-    number: Number,
-    isRetired: Boolean,
-    source: Array
-})
 
-const SnappleFact = mongoose.model('Snapplefact', snappleFactSchema)
+import SnappleFact from '../models/snapple-fact.js'
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -25,7 +19,7 @@ const connect = async () => {
     // Create a new page
     const page = await browser.newPage()
     
-    let number = 1
+    let number = 570
     
     while(true) {
 
@@ -39,12 +33,12 @@ const connect = async () => {
         //Extract the text content
         const fact = await page.evaluate(() => {
             const element = document.querySelector('.fact.pt-3')
-            return element ? element.innerText : null
+            return element ? element.innerText : 'MISSING'
         })
         
-        if (fact === null) {
+        if (fact === 'MISSING') {
             isRetired = true
-            source = [null]
+            source = []
             console.log(`Snapple Fact is retired \n`)
         } else {
             source = [source]
@@ -54,7 +48,7 @@ const connect = async () => {
         const output = await addSnappleFact({fact, number, isRetired, source})
         console.log(output)
     
-        await delay(200)
+        await delay(500)
         number = number + 1
     }
 }

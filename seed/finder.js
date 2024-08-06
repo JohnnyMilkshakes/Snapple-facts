@@ -4,14 +4,9 @@ import dotenv from 'dotenv'
 dotenv.config({path: '../.env'})
 
 
-const snappleFactSchema = new mongoose.Schema({
-    fact: String,
-    number: Number,
-    isRetired: Boolean,
-    source: Array
-})
+import SnappleFact from '../models/snapple-fact.js'
 
-const SnappleFact = mongoose.model('Snapplefact', snappleFactSchema )
+let source = `https://web.archive.org/web/20181008024855/https://www.snapple.com/real-facts/2`
 
 const connect = async () => {
     await mongoose.connect(process.env.MONGODB_URI)
@@ -25,7 +20,7 @@ const connect = async () => {
 
     try {
 
-        await page.goto(`https://web.archive.org/web/20181008024855/https://www.snapple.com/real-facts/2`, {timeout: 10000})
+        await page.goto(source, {timeout: 10000})
 
     } catch (err) {
 
@@ -54,18 +49,32 @@ const connect = async () => {
             
         });
 
+        // console.log(facts)
+
         facts.forEach(async (fact) => {
-            console.log(await updateSnappleFact(fact))
+            await updateSnappleFact(fact)
         })
     }    
 }
 
 const updateSnappleFact = async (snappleFact) => {
-    const response = await SnappleFact.findOneAndUpdate(
-        {number: snappleFact.number},
-        {fact: snappleFact.fact, source: ["https://web.archive.org/web/20181008024855/https://www.snapple.com/real-facts/2"]}
-    )
-    return response
+    const factObject = await SnappleFact.findOne({number: snappleFact.number})
+
+    // console.log(factObject)
+   
+    if (!factObject) {
+        console.log(`No document found with number: ${snappleFact.number}`);
+    } else if (factObject.fact === 'MISSING') {
+        console.log('Found a missing fact! Updating database...');
+        factObject.fact = snappleFact.fact
+    } else {
+        console.log('Already found, adding source to array');
+    }
+    factObject.source.push(source)
+
+    console.log(factObject)
+
+    await factObject.save()
 }
 
 connect()

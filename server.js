@@ -62,6 +62,13 @@ mongoose.connection.on("connected", () => {
         }
     })
 
+    server.get("/about", async (req, res) => {
+
+        res.render("about.ejs",{
+            user: req.session.user,
+        })
+
+    })
     server.get("/vip-lounge", (req, res) => {
         if (req.session.user) {
           res.send(`Welcome to the party ${req.session.user.username}.`);

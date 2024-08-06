@@ -20,36 +20,46 @@
                     <p class="fact-text"><%= snappleFact.fact %></p>
  
                 </div>
-                <div class="comment-submit-container">
-                    <% if (snappleFact.fact === "MISSING") { %>
-                        <div class="form-container">
-                            <h2>Submit Your Comment</h2>
-                            <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/" method="POST">
-                                <div>
-                                    <label for="comment">Comment</label>
-                                    <textarea id="comment" name="comment" rows="5" required></textarea>
-                                </div>
-                                <div>
-                                    <label for="source">Source</label>
-                                    <textarea id="source" name="source" required></textarea>
-                                </div>
-                                <div>
-                                    <button type="submit">Submit</button>
-                                </div>
-                            </form>
+                <% if (snappleFact.fact === "MISSING") { %>
+                    <% if (user) { %>
+                        <div class="comment-submit-container">
+                            
+                            <div class="form-container">
+                                <h2>Submit Your Comment</h2>
+                                <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/" method="POST">
+                                    <div>
+                                        <label for="comment">Comment</label>
+                                        <textarea id="comment" name="comment" rows="5" required></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="source">Source</label>
+                                        <textarea id="source" name="source" required></textarea>
+                                    </div>
+                                    <div>
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                                
                         </div>
-                    </div>
-                    <div class="comments-container">
-                        <h2 class="fact-title">Comments go here:</h2>
-                        <p class="fact-text">FIRST COMMENT</p>
-                    </div>
                     <% } %>
+                    <div class="comments-container">
+                        <h2 class="fact-title">Comments:</h2>
+
+                        <ol class="comments-list">
+                            <% snappleFact.comments.forEach((comment) => {%>
+                                <li>
+                                    Username: <%= comment.userId.username %><br>
+                                    Comment: <%= comment.comment %><br>
+                                    Source: <%= comment.source %><br>
+                                </li>
+                            <% }) %>
+                        </ol>
+                    </div>
+                <% } %>
                     
-                </div>
             </div>
-
-         </div>
-
+        </div>
         <!-- <p><a href="/vip-lounge">Get into the VIP Users Only lounge!</a></p> -->
 
   </body>

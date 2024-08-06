@@ -1,7 +1,6 @@
 import express from "express"
 import User from "../models/user.js"
 import SnappleFact from "../models/snapple-fact.js"
-import mongoose from "mongoose"
 
 
 const factsRouter = express.Router()
@@ -21,20 +20,17 @@ factsRouter.get('/', async (req, res) => {
 factsRouter.get('/:factNumber', async (req, res) => {
     let factNumber = req.params.factNumber
 
-    const response = await SnappleFact.findOne({number:factNumber})
+    const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
 
     res.render('facts/show.ejs', {
         user: req.session.user,
-        snappleFact: response
+        snappleFact: snappleFact
     })
 })
 
 // comment submission
 factsRouter.post('/:factNumber/comments', async (req, res) => {
-
-
     try {
-
         if(!req.session.user) {
             res.send("YOU MUST BE LOGGED IN")
         } else {

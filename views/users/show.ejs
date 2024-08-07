@@ -14,16 +14,37 @@
             <div class="sidebar">
                 <%- include('../partials/sidebar')%>
             </div>
-            <div class="main-area">
-                <h1>Welcome to your account, <%= user.username %>!</h1>
-
-                <div class="user-comments-container">
-                    <h2>Comments:</h2>
+            <div class="user-area">
+                <div class="user-header">
+                    <h1>Welcome to your account, <%= user.username %>!</h1>
                 </div>
+              
+                <div class="user-stuff">
+                    <div class="user-comments-container">
+                        <h2>Comments:</h2>
+                        <ol class="comments-list-preview">
+                            <% userComments.forEach((comment) => {%>
+                                <li>
+                                    Comment: <%= comment.comment %><br>
+                                    Source: <%= comment.source %><br>
+                                    Date: <%= comment.date%>
+                                </li>
+                            <% }) %>
+                        </ol>
+                    </div>
 
-                <div class="user-stars-container">
-                    <h2>Stars:</h2>
-
+                    <div class="user-stars-container">
+                        <h2>Stars:</h2>
+                        <ol class="stars-list-preview">
+                            <% userStars.forEach((fact) => {%>
+                                <li>
+                                    Number: <%= fact.number %><br>
+                                    <%= fact.fact %><br>
+                                    Source <%= fact.source %>
+                                </li>
+                            <% }) %>
+                        </ol>
+                    </div>
                 </div>
             </div>
 

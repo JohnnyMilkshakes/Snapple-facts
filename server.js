@@ -65,7 +65,6 @@ mongoose.connection.on("connected", () => {
         res.render("about.ejs",{
             user: req.session.user,
         })
-
     })    
 
     server.use('/auth', authController)

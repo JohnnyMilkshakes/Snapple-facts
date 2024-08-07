@@ -23,11 +23,19 @@
                     <div class="user-comments-container">
                         <h2>Comments:</h2>
                         <ol class="comments-list-preview">
-                            <% userComments.forEach((comment) => {%>
+                            <% userComments.forEach((comment) => { %>
+
                                 <li>
                                     Comment: <%= comment.comment %><br>
                                     Source: <%= comment.source %><br>
-                                    Date: <%= comment.date%>
+                                    Date: <%= comment.date %>
+                                    
+                                    <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>/edit" method="get">
+                                        <button type="submit">Edit</button>
+                                    </form>
+                                    <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>?_method=DELETE" method="post">
+                                        <button>Delete</button>
+                                    </form> 
                                 </li>
                             <% }) %>
                         </ol>

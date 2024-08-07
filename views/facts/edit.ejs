@@ -1,0 +1,64 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Home Page</title>
+  </head>
+  <body>
+
+        <div class="page-container">
+            <div class="sidebar">
+                <%- include('../partials/sidebar')%>
+            </div>
+            <div class="single-fact-area">
+                <div class="fact-container">
+                    <h2 class="fact-title">Snapple Fact # <%= snappleFact.number %></h2>
+                    <p class="fact-text"><%= snappleFact.fact %></p>
+ 
+                </div>
+                <% if (snappleFact.fact === "MISSING") { %>
+                    <% if (user) { %>
+                        <div class="comment-submit-container">
+                            
+                            <div class="form-container">
+                                <h2>EDIT Your Comment</h2>
+                                <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/?_method=PUT" method="POST">
+                                    <div>
+                                        <label for="comment">Comment</label>
+                                        <textarea id="comment" name="comment" rows="5" value="<%=comment.comment%>" required></textarea>
+                                    </div>
+                                    <div>
+                                        <label for="source">Source</label>
+                                        <textarea id="source" name="source" value="<%=comment.source%>" required></textarea>
+                                    </div>
+                                    <div>
+                                        <button type="submit">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                                
+                        </div>
+                    <% } %>
+                    <div class="comments-container">
+                        <h2 class="fact-title">Comments:</h2>
+
+                        <ol class="comments-list">
+                            <% snappleFact.comments.forEach((comment) => {%>
+                                <li>
+                                    Username: <%= comment.userId.username %><br>
+                                    Comment: <%= comment.comment %><br>
+                                    Source: <%= comment.source %><br>
+                                </li>
+                            <% }) %>
+                        </ol>
+                    </div>
+                <% } %>
+                    
+            </div>
+        </div>
+  </body>
+</html>

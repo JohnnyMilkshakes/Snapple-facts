@@ -32,7 +32,7 @@ usersRouter.get('/:userID', async (req, res) => {
 
     const user = await User.findOne({ username: req.session.user.username });
 
-    const userComments = await getUserComments(req.session.user)
+    const {userComments, snappleFacts} = await getUserComments(req.session.user)
     const userStars = await getUserStars(req.session.user)
 
     console.log("Stars: " + userStars)
@@ -41,6 +41,7 @@ usersRouter.get('/:userID', async (req, res) => {
         user: user,
         userComments: userComments,
         userStars: userStars,
+        snappleFacts: snappleFacts
     })
 })
 
@@ -51,7 +52,7 @@ usersRouter.get('/:userID/comments', async (req, res) => {
         // if the user is signed in
         if (req.session.user) {
 
-            const userComments = await getUserComments(req.session.user)
+            const {userComments} = await getUserComments(req.session.user)
 
             // render the ejs template with the comments
             res.render('users/comments.ejs', {
@@ -67,6 +68,8 @@ usersRouter.get('/:userID/comments', async (req, res) => {
         res.status(500).send('Server error');
     }
 })
+
+
 
 // Show all user stars
 usersRouter.get('/:userID/stars', async (req, res) => {
@@ -100,12 +103,13 @@ async function getUserComments(userSession) {
     snappleFacts.forEach(fact => {
         fact.comments.forEach(comment => {
             if (comment.userId.equals(user._id)) {
+                comment.factNum = fact.number
                 userComments.push(comment);
             }
         });
     });
 
-    return userComments
+    return {snappleFacts, userComments}
 }
 
 async function getUserStars(userSession) {

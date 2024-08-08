@@ -22,8 +22,6 @@ factsRouter.get('/:factNumber', async (req, res) => {
 
     const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
 
-    console.log(snappleFact)
-
     res.render('facts/show.ejs', {
         user: req.session.user,
         snappleFact: snappleFact
@@ -82,53 +80,55 @@ factsRouter.post('/:factNumber/comments', async (req, res) => {
     } 
 })
 
+// get the edit page
 factsRouter.get('/:factNumber/comments/:commentId/edit', async (req, res) => {
     let factNumber = req.params.factNumber
     const commentId = req.params.commentId
 
     const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
 
-    console.log("entire snapple fact: " + snappleFact)
-
     let commentToEdit
     snappleFact.comments.forEach((comment) => {
-        console.log("Inside for loop, comment: " + comment)
-        console.log("Inside for loop, comment._id: " + comment._id)
-        console.log("Inside for loop, commentId: " + commentId)
-
-        console.log("TYPEOF comment._id" + typeof comment._id.toString())
-        console.log("TYPEOF commentId" +typeof commentId)
-
         if (comment._id.toString() === commentId) {
-            commentToEdit = comment
+            commentToEdit = {
+                id: commentId,
+                comment: comment.comment,
+                source: comment.source
+            }
             return
         }
     })
 
-    console.log("COMMENT TO EDIT" + commentToEdit)
-
     res.render('facts/edit.ejs', {
         user: req.session.user,
         snappleFact: snappleFact,
-        comment: commentToEdit
+        commentToEdit: commentToEdit
     })
 })
 
+// upon submitting the form on the edit page it will hit this endpoint 
 factsRouter.put('/:factNumber/comments/:commentId', async (req, res) => {
 
     const commentId = req.params.commentId
     const factNumber = req.params.factNumber
 
+    // const result = await SnappleFact.find({number: factNumber});
+
+    console.log("BODY: " + JSON.stringify(req.body))
+
     const result = await SnappleFact.updateOne(
         { 'comments._id': commentId },
-        { $set: { 'comments.$': newCommentData } }
-      );
+        { $set: { 
+            'comments.$.comment': req.body.comment,
+            'comments.$.source': [req.body.source]
+        }}  // Replace 'text' with the actual field you want to update
+    );
 
-
-    console.log("Result: " + result)
-    res.redirect(`/${factNumber}`)
+    // console.log("Result: " + result)
+    res.redirect(`/facts/${factNumber}`)
   });
 
+// delete
 factsRouter.delete('/:factNumber/comments/:commentId', async (req, res) => {
 
     const commentId = req.params.commentId
@@ -136,11 +136,10 @@ factsRouter.delete('/:factNumber/comments/:commentId', async (req, res) => {
     const result = await SnappleFact.updateOne(
         { 'comments._id': commentId },
         { $pull: { comments: { _id: commentId } } }
-      );
+    );
 
 
-    console.log("Result: " + result)
     res.redirect(`/users/`)
-  });
+});
 
 export default factsRouter;

@@ -26,14 +26,14 @@
                             
                             <div class="form-container">
                                 <h2>EDIT Your Comment</h2>
-                                <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/?_method=PUT" method="POST">
+                                <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/<%=commentToEdit.id%>?_method=PUT" method="POST">
                                     <div>
                                         <label for="comment">Comment</label>
-                                        <textarea id="comment" name="comment" rows="5" value="<%=comment.comment%>" required></textarea>
+                                        <textarea id="comment" name="comment" rows="5" required><%=commentToEdit.comment%></textarea>
                                     </div>
                                     <div>
                                         <label for="source">Source</label>
-                                        <textarea id="source" name="source" value="<%=comment.source%>" required></textarea>
+                                        <textarea id="source" name="source" required><%=commentToEdit.source%></textarea>
                                     </div>
                                     <div>
                                         <button type="submit">Submit</button>

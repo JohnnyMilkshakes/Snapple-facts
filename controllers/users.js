@@ -118,7 +118,7 @@ async function getUserStars(userSession) {
 
     // find user
     const user = await User.findOne({ username: username })
-    console.log("User ID:" + user._id)
+    // console.log("User ID:" + user._id)
 
     // the users comments are embedded within the snapple facts so we 
     // find all snapple facts that have the user ID referenced in its stars array 
@@ -131,7 +131,7 @@ async function getUserStars(userSession) {
 
     // snappleFacts[0].save()
 
-    console.log("Array before returning: " +  snappleFacts)
+    // console.log("Array before returning: " +  snappleFacts)
 
     return snappleFacts
 }

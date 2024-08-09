@@ -15,10 +15,13 @@
                 <%- include('../partials/sidebar')%>
             </div>
             <div class="single-fact-area">
-                <div class="fact-container">
+                <%if(!snappleFact.isRetired) {snappleFact.color = "green"} else if (snappleFact.isRetired && (snappleFact.fact === "MISSING")) {snappleFact.color = "red"} else if (snappleFact.isRetired && (snappleFact.fact !== "MISSING")) {snappleFact.color = "reddish"} %>
+
+                <div class="fact-container <%= snappleFact.color %>">
+                    
                     <h2 class="fact-title">Snapple Fact # <%= snappleFact.number %></h2>
                     <p class="fact-text"><%= snappleFact.fact %></p>
- 
+                    <div class="fact-buttons"></div>
                 </div>
                 <% if (snappleFact.fact === "MISSING") { %>
                     <% if (user) { %>
@@ -28,12 +31,12 @@
                                 <h2>Submit Your Comment</h2>
                                 <form id="comment-form" action="/facts/<%=snappleFact.number%>/comments/" method="POST">
                                     <div>
-                                        <label for="comment">Comment</label>
-                                        <textarea id="comment" name="comment" rows="5" required></textarea>
+                                        <label for="comment" class="hidden">Comment</label>
+                                        <textarea class="comment-text-input" id="comment" name="comment" rows="5" required placeholder="Comment:"></textarea>
                                     </div>
                                     <div>
-                                        <label for="source">Source</label>
-                                        <textarea id="source" name="source" required></textarea>
+                                        <label for="source" class="hidden">Source</label>
+                                        <textarea class="source-text-input" id="source" name="source" required placeholder="Source:"></textarea>
                                     </div>
                                     <div>
                                         <button type="submit">Submit</button>

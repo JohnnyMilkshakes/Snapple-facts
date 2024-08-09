@@ -12,11 +12,12 @@
 
         <div class="page-container">
             <div class="sidebar">
-                <%- include('../partials/sidebar')%>
+                <%-include('../partials/sidebar')%>
             </div>
             <div class="user-area">
                 <div class="user-header">
                     <h1>Welcome to your account, <%= user.username %>!</h1>
+                    <a href="/auth/sign-out">Sign out</a>
                 </div>
               
                 <div class="user-stuff">
@@ -25,17 +26,19 @@
                         <ol class="comments-list-preview">
                             <% userComments.forEach((comment) => { %>
 
-                                <li>
-                                    Comment: <%= comment.comment %><br>
-                                    Source: <%= comment.source %><br>
-                                    Date: <%= comment.date %>
+                                <li class="comment-container">
+                                    <div class="edit-delete-buttons">
+                                        <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>/edit" method="get">
+                                            <button type="submit" class="edit-button">Edit</button>
+                                        </form>
+                                        <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>?_method=DELETE" method="post">
+                                            <button class="delete-button">Delete</button>
+                                        </form> 
+                                    </div>
+
+                                    <p>Comment: <%= comment.comment %></p>
+                                    <p>Source: <%= comment.source %> </br> Date: <%= comment.date %></p>
                                     
-                                    <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>/edit" method="get">
-                                        <button type="submit">Edit</button>
-                                    </form>
-                                    <form action="/facts/<%=comment.factNum%>/comments/<%=comment._id%>?_method=DELETE" method="post">
-                                        <button>Delete</button>
-                                    </form> 
                                 </li>
                             <% }) %>
                         </ol>

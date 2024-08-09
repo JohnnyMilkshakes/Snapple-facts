@@ -1,10 +1,9 @@
 <div class="sign-buttons">
     <% if (user) { %>
-        <button><a href="/auth/sign-out">Sign out</a></button>
-        <button><a href="/users">Your Account</a></button>
+        <a href="/users">Your Account</a>
     <% } else { %>
-        <button><a href="/auth/sign-up">Sign up</a></button> 
-        <button><a href="/auth/sign-in">sign in</a></button>
+        <a href="/auth/sign-up">Sign up</a> 
+       <a href="/auth/sign-in">sign in</a>
     <% } %>
 </div>
 <div class="nav-buttons">

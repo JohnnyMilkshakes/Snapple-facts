@@ -9,7 +9,6 @@
     <title>Home Page</title>
   </head>
   <body>
-
         <div class="page-container">
             <div class="sidebar">
                 <%- include('partials/sidebar')%>
@@ -25,8 +24,8 @@
 
                 <div class="search-container">
                     <form action="/" method="get">
-                        <input type="text" name="query" id="searchInput" placeholder="Find a specific number">
-                        <button type="submit">Find</button>
+                        <input type="text" name="query" class="search-input"placeholder="Find a specific number">
+                        <button type="submit" class="search-button">Go</button>
                     </form>
                 </div>
 
@@ -39,10 +38,7 @@
                         <button class="arrow-button">--></button>
                     </div>
                 </div>
-
             </div>
-
          </div>
-
   </body>
 </html>

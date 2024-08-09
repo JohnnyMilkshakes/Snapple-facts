@@ -5,7 +5,11 @@ import bcrypt from "bcrypt"
 const authRouter = express.Router()
 
 authRouter.get('/sign-up', async (req,res) => {
-    res.render("auth/sign-up.ejs")
+    res.render("auth/sign-up.ejs",
+        {
+            user: req.session.user,
+        }
+    )
 })
 
 authRouter.post('/sign-up', async (req,res) => {
@@ -29,9 +33,12 @@ authRouter.post('/sign-up', async (req,res) => {
 })
 
 authRouter.get('/sign-in', async (req,res) => {
-    res.render('auth/sign-in.ejs')
+    res.render('auth/sign-in.ejs',
+        {
+            user: req.session.user,
+        }
+    )
 })
-
 
 authRouter.post('/sign-in', async (req,res) => {
     // check if user exists

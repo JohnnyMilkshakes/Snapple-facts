@@ -17,7 +17,27 @@ h2 {
     grid-auto-flow: row;
     grid-template-areas:
       "sidebar main-area";
-      height: 100%;
+    height: 100%;
+}
+
+.auth-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-heading > h1{
+    color: rgb(89, 249, 89);
+}
+.auth-heading > h2{
+    color: rgba(89, 249, 89, 0.329);
 }
   
 .main-area { 
@@ -34,7 +54,20 @@ h2 {
 }
 
 .heading { grid-area: heading; }
-.search-container { grid-area: search-container; }
+
+.search-container { 
+    grid-area: search-container;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    /* max-width: 400px;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+ }
 .fact-container { grid-area: fact-container; }
 .comment-container { grid-area: comment-container; }
 
@@ -153,10 +186,42 @@ header {
     text-align: center;
     border-radius: 0;
     border: 3px solid rgb(0, 80, 219);
+}
+
+.random-button > a{
+    text-align: center;
+    border-radius: 0;
     text-decoration: none;
     text-transform: uppercase;
     color: rgb(252, 252, 252);
     font-size: 1em;
+}
+
+
+
+.search-input {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50px;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    border: 3px solid rgb(0, 80, 219);
+
+}
+
+.search-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    background-color: rgb(0, 45, 121);
+    border: 3px solid rgb(0, 80, 219);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .arrow-button {
@@ -188,6 +253,7 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     border-radius: 30px;
     color:white
 }
@@ -222,13 +288,17 @@ header {
 }
 
 .comments-list > li {
-
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px;
     border: 2px solid rgb(0, 139, 139);;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-    padding: 20px;
     background-color: rgb(59, 58, 58);
-    margin: 5px;
+    margin: 10px;
     list-style-type: none;
+    color: white;
+    height: 15%;
 
 }
 

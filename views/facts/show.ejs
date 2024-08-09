@@ -52,9 +52,15 @@
                         <ol class="comments-list">
                             <% snappleFact.comments.forEach((comment) => {%>
                                 <li>
-                                    Username: <%= comment.userId.username %><br>
-                                    Comment: <%= comment.comment %><br>
-                                    Source: <%= comment.source %><br>
+                                    <div>
+                                        Username: <%= comment.userId.username %>
+                                    </div>
+                                    <div>
+                                        Comment: <%= comment.comment %>
+                                    </div>
+                                    <div>
+                                        Source: <%= comment.source %>
+                                    </div>
                                 </li>
                             <% }) %>
                         </ol>

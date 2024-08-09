@@ -3,18 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css">
     <title>Sign Up</title>
   </head>
   <body>
-    <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="post">
-      <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
-      <button type="submit">Sign up</button>
-    </form>
+    <div class="page-container">
+
+      <div class="sidebar">
+        <%- include('../partials/sidebar')%>
+      </div>
+      <div class="auth-area">
+
+        <div class="auth-heading">
+          <h1>Create an account</h1>
+          <h2>one of us... one of us... one of us...</h2>
+        </div>
+        <div class="sign-in-container">
+          <form action="/auth/sign-up" method="post">
+            <label for="username" class="hidden">Username:</label>
+            <input type="text" name="username" id="username" placeholder="Username:"/>
+            <label for="password" class="hidden">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Password:"/>
+            <label for="confirmPassword" class="hidden">Confirm Password:</label>
+            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password:"/>
+            <button type="submit">Sign up</button>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

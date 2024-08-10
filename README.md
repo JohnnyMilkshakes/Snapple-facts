@@ -33,14 +33,33 @@ This website is an attempt to compile and display all of the snapple facts in ex
 ```
 .
 ├── README.md
-├── controllers
-│   ├── auth.js
-│   ├── facts.js
-│   └── users.js
 ├── models
 │   ├── comment.js
 │   ├── snapple-fact.js
 │   └── user.js
+├── views
+│   ├── about.ejs
+│   ├── auth
+│   │   ├── sign-in.ejs
+│   │   └── sign-up.ejs
+│   ├── facts
+│   │   ├── edit.ejs
+│   │   ├── index.ejs
+│   │   └── show.ejs
+│   ├── index.ejs
+│   ├── partials
+│   │   └── sidebar.ejs
+│   └── users
+│       ├── comments.ejs
+│       ├── show.ejs
+│       └── stars.ejs
+├── controllers
+│   ├── auth.js
+│   ├── facts.js
+│   └── users.js
+├── middleware
+│   ├── is-signed-in.js
+│   └──  pass-user-to-view.js
 ├── public
 │   ├── css
 │   │   └── style.css
@@ -48,23 +67,8 @@ This website is an attempt to compile and display all of the snapple facts in ex
 ├── seed
 │   ├── finder.js
 │   └── source.js
-├── server.js
-└── views
-    ├── about.ejs
-    ├── auth
-    │   ├── sign-in.ejs
-    │   └── sign-up.ejs
-    ├── facts
-    │   ├── edit.ejs
-    │   ├── index.ejs
-    │   └── show.ejs
-    ├── index.ejs
-    ├── partials
-    │   └── sidebar.ejs
-    └── users
-        ├── comments.ejs
-        ├── show.ejs
-        └── stars.ejs
+└── server.js
+
 ```
 
 #### Next Steps:

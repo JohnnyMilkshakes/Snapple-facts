@@ -12,6 +12,8 @@ import authController from "./controllers/auth.js"
 import factsController from "./controllers/facts.js"
 import SnappleFact from "./models/snapple-fact.js"
 import usersController from "./controllers/users.js"
+import isSignedIn from './middleware/is-signed-in.js'
+import passUserToView from './middleware/pass-user-to-view.js'
 
 const server = express()
 
@@ -46,6 +48,8 @@ mongoose.connection.on("connected", () => {
         })
     )
 
+    server.use(passUserToView)
+
     server.get("/", async (req, res) => {
 
         try {
@@ -60,8 +64,7 @@ mongoose.connection.on("connected", () => {
                 const rand = Math.floor(Math.random() * inCircFacts.length)    
         
                 res.render("index.ejs", {
-                    user: req.session.user,
-                    snappleFact: response[rand]
+                    snappleFact: inCircFacts[rand]
                 })
             }
         } catch (err) {

@@ -11,7 +11,6 @@ factsRouter.get('/', async (req, res) => {
         const facts = await SnappleFact.find({})//.limit(20);
 
         res.render('facts/index.ejs', {
-            user: req.session.user,
             facts: facts
         })
     } catch (err) {
@@ -30,7 +29,6 @@ factsRouter.get('/:factNumber', async (req, res) => {
         const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
 
         res.render('facts/show.ejs', {
-            user: req.session.user,
             snappleFact: snappleFact
         })
     } catch (err) {
@@ -114,7 +112,6 @@ factsRouter.get('/:factNumber/comments/:commentId/edit', async (req, res) => {
         })
 
         res.render('facts/edit.ejs', {
-            user: req.session.user,
             snappleFact: snappleFact,
             commentToEdit: commentToEdit
         })
@@ -132,19 +129,14 @@ factsRouter.put('/:factNumber/comments/:commentId', async (req, res) => {
         const commentId = req.params.commentId
         const factNumber = req.params.factNumber
 
-        // const result = await SnappleFact.find({number: factNumber});
-
-        console.log("BODY: " + JSON.stringify(req.body))
-
-        const result = await SnappleFact.updateOne(
+        await SnappleFact.updateOne(
             { 'comments._id': commentId },
             { $set: { 
                 'comments.$.comment': req.body.comment,
                 'comments.$.source': [req.body.source]
-            }}  // Replace 'text' with the actual field you want to update
+            }}
         );
 
-        // console.log("Result: " + result)
         res.redirect(`/facts/${factNumber}`)
     } catch (err) {
         console.log(err);

@@ -60,7 +60,6 @@ usersRouter.get('/:userID/comments', async (req, res) => {
 
             // render the ejs template with the comments
             res.render('users/comments.ejs', {
-                user: req.session.user,
                 userComments: userComments
             })
  
@@ -84,7 +83,6 @@ usersRouter.get('/:userID/stars', async (req, res) => {
         console.log("Stars: " + userStars)
 
         res.render('users/stars.ejs', {
-            user: req.session.user,
             userStars: userStars
         })
     } catch (error) {

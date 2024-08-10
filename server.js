@@ -16,6 +16,7 @@ import usersController from "./controllers/users.js"
 const server = express()
 
 // Simulate __dirname in ES6 modules
+// chatgpt wrote these two lines and the imports for them
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -47,21 +48,30 @@ mongoose.connection.on("connected", () => {
 
     server.get("/", async (req, res) => {
 
-        if (req.query.query) {
-            res.redirect(`/facts/${req.query.query}`)
-        } else {
-            const response = await SnappleFact.find({isRetired:false})
-            const rand = Math.floor(Math.random() * 343)    
-    
-            res.render("index.ejs", {
-                user: req.session.user,
-                snappleFact: response[rand]
-            })
+        try {
+
+            if (req.query.query) {
+                res.redirect(`/facts/${req.query.query}`)
+            } else {
+
+                //this ensures that the home page only displays facts that are currently in circulation (not retired)
+                const inCircFacts = await SnappleFact.find({isRetired:false})
+
+                const rand = Math.floor(Math.random() * inCircFacts.length)    
+        
+                res.render("index.ejs", {
+                    user: req.session.user,
+                    snappleFact: response[rand]
+                })
+            }
+        } catch (err) {
+            console.log(err);
+            res.status(500).send('Server error');
         }
+            
     })
 
     server.get("/about", async (req, res) => {
-
         res.render("about.ejs",{
             user: req.session.user,
         })

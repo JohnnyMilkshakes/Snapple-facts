@@ -7,31 +7,43 @@ const factsRouter = express.Router()
 // list of facts
 factsRouter.get('/', async (req, res) => {
 
-    const facts = await SnappleFact.find({})//.limit(20);
+    try {
+        const facts = await SnappleFact.find({})//.limit(20);
 
-    res.render('facts/index.ejs', {
-        user: req.session.user,
-        facts: facts
-    })
+        res.render('facts/index.ejs', {
+            user: req.session.user,
+            facts: facts
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 })
 
 // single fact 
 factsRouter.get('/:factNumber', async (req, res) => {
-    let factNumber = req.params.factNumber
 
-    const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
+    try {
 
-    res.render('facts/show.ejs', {
-        user: req.session.user,
-        snappleFact: snappleFact
-    })
+        let factNumber = req.params.factNumber
+
+        const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
+
+        res.render('facts/show.ejs', {
+            user: req.session.user,
+            snappleFact: snappleFact
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 })
 
 // comment submission
 factsRouter.post('/:factNumber/comments', async (req, res) => {
     try {
         if(!req.session.user) {
-            res.send("YOU MUST BE LOGGED IN")
+            res.send("YOU MUST BE LOGGED IN: THE SNAPPLE FACT AUTHORITIES HAVE BEEN NOTIFIED")
         } else {
             // Get fact number from URL
             const { factNumber } = req.params; 
@@ -81,64 +93,82 @@ factsRouter.post('/:factNumber/comments', async (req, res) => {
 
 // get the edit page
 factsRouter.get('/:factNumber/comments/:commentId/edit', async (req, res) => {
-    let factNumber = req.params.factNumber
-    const commentId = req.params.commentId
 
-    const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
+    try {
 
-    let commentToEdit
-    snappleFact.comments.forEach((comment) => {
-        if (comment._id.toString() === commentId) {
-            commentToEdit = {
-                id: commentId,
-                comment: comment.comment,
-                source: comment.source
+        let factNumber = req.params.factNumber
+        const commentId = req.params.commentId
+
+        const snappleFact = await SnappleFact.findOne({number:factNumber}).populate('comments.userId')
+
+        let commentToEdit
+        snappleFact.comments.forEach((comment) => {
+            if (comment._id.toString() === commentId) {
+                commentToEdit = {
+                    id: commentId,
+                    comment: comment.comment,
+                    source: comment.source
+                }
+                return
             }
-            return
-        }
-    })
+        })
 
-    res.render('facts/edit.ejs', {
-        user: req.session.user,
-        snappleFact: snappleFact,
-        commentToEdit: commentToEdit
-    })
+        res.render('facts/edit.ejs', {
+            user: req.session.user,
+            snappleFact: snappleFact,
+            commentToEdit: commentToEdit
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 })
 
 // upon submitting the form on the edit page it will hit this endpoint 
 factsRouter.put('/:factNumber/comments/:commentId', async (req, res) => {
 
-    const commentId = req.params.commentId
-    const factNumber = req.params.factNumber
+    try {
 
-    // const result = await SnappleFact.find({number: factNumber});
+        const commentId = req.params.commentId
+        const factNumber = req.params.factNumber
 
-    console.log("BODY: " + JSON.stringify(req.body))
+        // const result = await SnappleFact.find({number: factNumber});
 
-    const result = await SnappleFact.updateOne(
-        { 'comments._id': commentId },
-        { $set: { 
-            'comments.$.comment': req.body.comment,
-            'comments.$.source': [req.body.source]
-        }}  // Replace 'text' with the actual field you want to update
-    );
+        console.log("BODY: " + JSON.stringify(req.body))
 
-    // console.log("Result: " + result)
-    res.redirect(`/facts/${factNumber}`)
+        const result = await SnappleFact.updateOne(
+            { 'comments._id': commentId },
+            { $set: { 
+                'comments.$.comment': req.body.comment,
+                'comments.$.source': [req.body.source]
+            }}  // Replace 'text' with the actual field you want to update
+        );
+
+        // console.log("Result: " + result)
+        res.redirect(`/facts/${factNumber}`)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
   });
 
 // delete
 factsRouter.delete('/:factNumber/comments/:commentId', async (req, res) => {
 
-    const commentId = req.params.commentId
+    try {
 
-    const result = await SnappleFact.updateOne(
-        { 'comments._id': commentId },
-        { $pull: { comments: { _id: commentId } } }
-    );
+        const commentId = req.params.commentId
 
+        const result = await SnappleFact.updateOne(
+            { 'comments._id': commentId },
+            { $pull: { comments: { _id: commentId } } }
+        );
 
-    res.redirect(`/users/`)
+        res.redirect(`/users/`)
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Server error');
+    }
 });
 
 export default factsRouter;

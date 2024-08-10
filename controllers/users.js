@@ -1,7 +1,6 @@
 import express from "express"
 import User from "../models/user.js"
 import SnappleFact from "../models/snapple-fact.js"
-import mongoose from "mongoose"
 
 const usersRouter = express.Router()
 
@@ -30,19 +29,24 @@ usersRouter.get('/', async (req, res) => {
 // Show user page
 usersRouter.get('/:userID', async (req, res) => {
 
-    const user = await User.findOne({ username: req.session.user.username });
+    try {
 
-    const {userComments, snappleFacts} = await getUserComments(req.session.user)
-    const userStars = await getUserStars(req.session.user)
+        const user = await User.findOne({ username: req.session.user.username });
 
-    console.log("Stars: " + userStars)
+        const {userComments, snappleFacts} = await getUserComments(req.session.user)
+        const userStars = await getUserStars(req.session.user)
 
-    res.render('users/show.ejs', {
-        user: user,
-        userComments: userComments,
-        userStars: userStars,
-        snappleFacts: snappleFacts
-    })
+        console.log("Stars: " + userStars)
+
+        res.render('users/show.ejs', {
+            user: user,
+            userComments: userComments,
+            userStars: userStars,
+            snappleFacts: snappleFacts
+        })
+    } catch (error) {
+        console.error('Error fetching user comments:', error);
+    }
 })
 
 // Show all user comments
@@ -74,66 +78,76 @@ usersRouter.get('/:userID/comments', async (req, res) => {
 // Show all user stars
 usersRouter.get('/:userID/stars', async (req, res) => {
 
-    const userStars = await getUserStars(req.session.user)
+    try {
+        const userStars = await getUserStars(req.session.user)
 
-    console.log("Stars: " + userStars)
+        console.log("Stars: " + userStars)
 
-    res.render('users/stars.ejs', {
-        user: req.session.user,
-        userStars: userStars
-    })
+        res.render('users/stars.ejs', {
+            user: req.session.user,
+            userStars: userStars
+        })
+    } catch (error) {
+        console.error('Error fetching user comments:', error);
+    }
 })
 
 async function getUserComments(userSession) {
-    //set username
-    const username = userSession.username;
+    try {
+        // Destructure the username from userSession
+        const { username } = userSession;
 
-    // find user
-    const user = await User.findOne({ username: username })
+        // Find the user by username
+        const user = await User.findOne({ username });
+        if (!user) {
+            throw new Error('User not found');
+        }
 
-    // the users comments are embedded within the snapple facts so we 
-    // find all snapple facts that have the user ID embedded somewhere in its comments 
-    // this returns all of the facts as an array and all of the comments associated with each fact
-    const snappleFacts = await SnappleFact.find({
-        'comments.userId': user._id
-    })
-
-    // extract only the comments that match the user ID
-    const userComments = [];
-    snappleFacts.forEach(fact => {
-        fact.comments.forEach(comment => {
-            if (comment.userId.equals(user._id)) {
-                comment.factNum = fact.number
-                userComments.push(comment);
-            }
+        // Find SnappleFacts with comments from the user
+        const snappleFacts = await SnappleFact.find({
+            'comments.userId': user._id
         });
-    });
 
-    return {snappleFacts, userComments}
+        // Extract only the comments made by the user
+        const userComments = snappleFacts.flatMap(fact =>
+            fact.comments
+                .filter(comment => comment.userId.equals(user._id))
+                .map(comment => ({ ...comment.toObject(), factNum: fact.number }))
+        );
+
+        return { snappleFacts, userComments };
+    } catch (error) {
+        console.error('Error fetching user comments:', error);
+    }
 }
 
 async function getUserStars(userSession) {
-    //set username
-    const username = userSession.username;
 
-    // find user
-    const user = await User.findOne({ username: username })
-    // console.log("User ID:" + user._id)
+    try{
+        //set username
+        const { username } = userSession;
 
-    // the users comments are embedded within the snapple facts so we 
-    // find all snapple facts that have the user ID referenced in its stars array 
-    // this returns all of the facts as an array
-    const snappleFacts = await SnappleFact.find({stars: user._id})
+        // find user
+        const user = await User.findOne({ username: username })
+        // console.log("User ID:" + user._id)
 
-    // console.log(snappleFacts)
+        // the users comments are embedded within the snapple facts so we 
+        // find all snapple facts that have the user ID referenced in its stars array 
+        // this returns all of the facts as an array
+        const snappleFacts = await SnappleFact.find({stars: user._id})
 
-    // snappleFacts[0].stars.push(user._id)
+        // console.log(snappleFacts)
 
-    // snappleFacts[0].save()
+        // snappleFacts[0].stars.push(user._id)
 
-    // console.log("Array before returning: " +  snappleFacts)
+        // snappleFacts[0].save()
 
-    return snappleFacts
+        // console.log("Array before returning: " +  snappleFacts)
+
+        return snappleFacts
+    } catch (error) {
+        console.error('Error fetching user comments:', error);
+    }
 }
 
 export default usersRouter;

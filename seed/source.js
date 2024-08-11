@@ -19,7 +19,7 @@ const connect = async () => {
     // Create a new page
     const page = await browser.newPage()
     
-    let number = 570
+    let number = 1
     
     while(true) {
 
@@ -48,7 +48,7 @@ const connect = async () => {
         const output = await addSnappleFact({fact, number, isRetired, source})
         console.log(output)
     
-        await delay(500)
+        await delay(500) //rate limit
         number = number + 1
     }
 }
@@ -56,36 +56,6 @@ const connect = async () => {
 const addSnappleFact = async (fact) => {
     const response = await SnappleFact.create(fact)
     return response
-}
-
-const updateSnappleFact = async (entryToUpdate, fieldsToChange) => {
-    const response = await SnappleFact.updateOne(entryToUpdate, fieldsToChange)
-    return response
-}
-
-const getAllSnappleFacts = async () => {
-    const response = await SnappleFact.find({})
-    return response
-}
-
-const getSnappleFactById = async (id) => {
-    const response = await Todo.findById(id)
-    return response
-}
-
-const updateTodoComplete = async (id) => {
-    const response = await Todo.findByIdAndUpdate(
-        id,
-        {isComplete: true},
-        {new:true}
-    )
-
-    return response
-}
-
-const deleteOneSnappleFact = async (id) => {
-    const fact = await getSnappleFactById(id)
-    await fact.deleteOne()
 }
 
 connect()

@@ -30,7 +30,6 @@ usersRouter.get('/', async (req, res) => {
 usersRouter.get('/:userID', async (req, res) => {
 
     try {
-
         const user = await User.findOne({ username: req.session.user.username });
 
         const {userComments, snappleFacts} = await getUserComments(req.session.user)
@@ -45,7 +44,7 @@ usersRouter.get('/:userID', async (req, res) => {
             snappleFacts: snappleFacts
         })
     } catch (error) {
-        console.error('Error fetching user comments:', error);
+        console.error(error);
     }
 })
 
@@ -71,8 +70,6 @@ usersRouter.get('/:userID/comments', async (req, res) => {
         res.status(500).send('Server error');
     }
 })
-
-
 
 // Show all user stars
 usersRouter.get('/:userID/stars', async (req, res) => {
@@ -129,7 +126,7 @@ async function getUserStars(userSession) {
         const user = await User.findOne({ username: username })
         // console.log("User ID:" + user._id)
 
-        // the users comments are embedded within the snapple facts so we 
+        // the users stars are referenced within the snapple facts so we 
         // find all snapple facts that have the user ID referenced in its stars array 
         // this returns all of the facts as an array
         const snappleFacts = await SnappleFact.find({stars: user._id})

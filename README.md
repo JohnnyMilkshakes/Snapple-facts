@@ -58,7 +58,7 @@ This website is an attempt to compile and display all of the snapple facts in ex
 │   ├── facts.js
 │   └── users.js
 ├── middleware
-│   ├── is-signed-in.js
+│   ├──  is-signed-in.js
 │   └──  pass-user-to-view.js
 ├── public
 │   ├── css
@@ -68,7 +68,6 @@ This website is an attempt to compile and display all of the snapple facts in ex
 │   ├── finder.js
 │   └── source.js
 └── server.js
-
 ```
 
 #### Next Steps:

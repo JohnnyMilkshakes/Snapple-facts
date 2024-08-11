@@ -41,7 +41,7 @@ factsRouter.get('/:factNumber', async (req, res) => {
 factsRouter.post('/:factNumber/comments', async (req, res) => {
     try {
         if(!req.session.user) {
-            res.send("YOU MUST BE LOGGED IN: THE SNAPPLE FACT AUTHORITIES HAVE BEEN NOTIFIED")
+            res.send("YOU MUST BE LOGGED IN")
         } else {
             // Get fact number from URL
             const { factNumber } = req.params; 

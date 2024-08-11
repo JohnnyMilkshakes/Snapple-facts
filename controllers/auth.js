@@ -33,11 +33,10 @@ authRouter.get('/sign-in', async (req,res) => {
 })
 
 authRouter.post('/sign-in', async (req,res) => {
-    try {
 
+    try {
         // check if user exists
         const user = await User.findOne({username: req.body.username})
-        
         if (!user) {
             res.send("Wrong username")
         } 

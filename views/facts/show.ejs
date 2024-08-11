@@ -50,19 +50,21 @@
                         <h2 class="fact-title">Comments:</h2>
 
                         <ol class="comments-list">
-                            <% snappleFact.comments.forEach((comment) => {%>
-                                <li>
-                                    <div>
-                                        Username: <%= comment.userId.username %>
-                                    </div>
-                                    <div>
-                                        Comment: <%= comment.comment %>
-                                    </div>
-                                    <div>
-                                        Source: <%= comment.source %>
-                                    </div>
-                                </li>
-                            <% }) %>
+                            <% if (snappleFact.comments) { %>
+                                <% snappleFact.comments.forEach((comment) => {%>
+                                    <li>
+                                        <div>
+                                            Username: <%= comment.userId.username %>
+                                        </div>
+                                        <div>
+                                            Comment: <%= comment.comment %>
+                                        </div>
+                                        <div>
+                                            Source: <%= comment.source %>
+                                        </div>
+                                    </li>
+                                <% }) %>
+                            <% } %>
                         </ol>
                     </div>
                 <% } %>

@@ -10,7 +10,7 @@ This website is an attempt to compile and display all of the snapple facts in ex
 
 #### How To Get Started:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit: https://main--pong-shakes.netlify.app/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit:
 
 * Familiarize yourself with the site, visit the home page and view a few random facts.
 * Create a profile in order to submit comments and star facts
@@ -72,6 +72,6 @@ This website is an attempt to compile and display all of the snapple facts in ex
 
 #### Next Steps:
 
-* Create a branch in order to convert the game to use the canvas API
-* Improve computer opponent logic
-* Store and display user win/loss record 
+* Refactor styling, to use sass
+* finish implementing star system 
+* create consistent color palette 

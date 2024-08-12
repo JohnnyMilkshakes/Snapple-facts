@@ -238,7 +238,7 @@ header {
 .single-fact-area {  
     display: grid;
     grid-template-columns: 0.3fr 2.4fr 0.3fr;
-    grid-template-rows: 1.5fr 1fr 1fr;
+    /* grid-template-rows: 1.5fr 1fr 1fr; */
     grid-auto-columns: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;

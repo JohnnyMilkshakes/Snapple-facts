@@ -1,6 +1,10 @@
 # Snapple-facts
 This website is an attempt to compile and display all of the snapple facts in existence. 
 
+
+![Website pics](./public/images/homescreen.png)
+![Website pics](./public/images/index.png)
+
 #### Features:
 
 * Home page displays a single random snapple fact, it will only display facts that are still in circulation.
@@ -26,9 +30,6 @@ This website is an attempt to compile and display all of the snapple facts in ex
 * MongoDB 
 * mongoose 
 * RESTful HTTP API
-
-
-![Website pics](./public/)
 
 ```
 .

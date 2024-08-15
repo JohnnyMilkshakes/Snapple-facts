@@ -19,7 +19,7 @@ const connect = async () => {
     // Create a new page
     const page = await browser.newPage()
     
-    let number = 1
+    let number = 824
     
     while(true) {
 

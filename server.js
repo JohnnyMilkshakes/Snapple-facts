@@ -58,9 +58,9 @@ mongoose.connection.on("connected", () => {
 
         try {
 
-            // if (req.query.query) {
-            //     res.redirect(`/facts/${req.query.query}`)
-            // } else {
+            if (req.query.query) {
+                res.redirect(`/facts/${req.query.query}`)
+            } else {
 
                 //this ensures that the home page only displays facts that are currently in circulation (not retired)
                 const inCircFacts = await SnappleFact.find({isRetired:false})
@@ -70,7 +70,7 @@ mongoose.connection.on("connected", () => {
                 res.render("index.ejs", {
                     snappleFact: inCircFacts[rand]
                 })
-            // }
+            }
         } catch (err) {
             console.log(err);
             res.status(500).send('Server error');

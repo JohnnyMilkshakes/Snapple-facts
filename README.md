@@ -14,7 +14,7 @@ This website is an attempt to compile and display all of the snapple facts in ex
 
 #### How To Get Started:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Visit: https://snapple-facts-9db5080654aa.herokuapp.com/
 
 * Familiarize yourself with the site, visit the home page and view a few random facts.
 * Create a profile in order to submit comments and star facts

@@ -22,6 +22,8 @@ const server = express()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.set('view engine', 'ejs');
+
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT || "3000"
 

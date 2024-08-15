@@ -22,8 +22,6 @@ const server = express()
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-server.set('view engine', 'ejs');
-server.set('views', path.join(__dirname, 'views'));
 
 // Set the port from environment variable or default to 3000
 const port = process.env.PORT || "3000"
@@ -42,6 +40,9 @@ mongoose.connection.on("connected", () => {
     server.use(morgan('dev'))
 
     server.use(express.static(path.join(__dirname, "public")));
+
+    server.set('view engine', 'ejs');
+    server.set('views', path.join(__dirname, 'views'));
 
     server.use(
         session({
